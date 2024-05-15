@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Album Ranker </title>
+        <link rel = "stylesheet" href= "design.css" />
+    </head>
+
+    <script>
+        function badAlbum() {
+            document.getElementById("cover").src = "sour-album-cover.png";
+            document.getElementById("title").innerHTML = "Title: Sour";
+            document.getElementById("rating").innerHTML = "Rating: ⭐ / ⭐⭐⭐⭐⭐";
+            document.getElementById("reason").innerHTML = "Reason: Her second album is way better.";
+            unhide();
+        }
+
+        function averageAlbum() {
+            document.getElementById("cover").src = "design.jpeg";
+            document.getElementById("title").innerHTML = "Title: Harry Styles";
+            document.getElementById("rating").innerHTML = "Rating: ⭐⭐⭐ / ⭐⭐⭐⭐⭐";
+            document.getElementById("reason").innerHTML = "Reason: I love Harry but this isn't his best one.";
+            unhide();
+        }
+
+        function goodAlbum() {
+            document.getElementById("cover").src = "the-record.jpg";
+            document.getElementById("title").innerHTML = "Title: The Record";
+            document.getElementById("rating").innerHTML = "Rating: ⭐⭐⭐⭐⭐ / ⭐⭐⭐⭐⭐";
+            document.getElementById("reason").innerHTML = "Reason: live love boygenius";
+            unhide();
+        }
+
+        function unhide() {
+            document.getElementById("cover").removeAttribute("hidden");
+            document.getElementById("title").removeAttribute("hidden");
+            document.getElementById("rating").removeAttribute("hidden");
+            document.getElementById("reason").removeAttribute("hidden");
+        }
+        
+    </script>
+
+    <body>
+        <div>
+            <div class = "header" >
+                <h1> Lucy's Album Ranking </h1>
+            </div>
+    
+            <div class = "navbar" >
+                <button onclick="badAlbum()"> Bad </button>
+                <button onclick="averageAlbum()"> Average </button>
+                <button onclick="goodAlbum()"> Good </button>
+            </div>
+
+            <div class = "main">
+                <img hidden id="cover" src="img_girl.jpg" alt= "Girl in a jacket" height = 300 width = 300>
+                <p hidden id="title"> Title: Girl in Jacket: The Album </p>
+                <p hidden id="rating"> Rating: ⭐⭐ / ⭐⭐⭐⭐⭐ </p>
+                <p hidden id="reason"> Reason: I HATE wearing jackets! </p>
+            </div>
+        </div>
+    </body>
+</html>

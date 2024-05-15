@@ -1,0 +1,31 @@
+console.log("Hello, World!");
+let name = "Lucy";
+const age = "19";
+var computer = "macbook";
+
+console.log(name)
+console.log(age)
+console.log(computer)
+
+const isStudent = true;
+let hobbies = ['running', 'music', 'skiing'];
+
+if (age >= 18) {
+    console.log("You're an adult!")
+} else {
+    console.log("You're a child!")
+}
+
+function greetUser() {
+    console.log("Hello," + name)
+}
+
+greetUser("Lucy");
+
+document.getElementById("ptext").innerText = ("Welcome to a great JavaScript Tutorial.");
+
+function whatToDo() {
+    alert("This button was clicked");
+}
+
+document.getElementById("clickme").addEventListener("click", whatToDo);
