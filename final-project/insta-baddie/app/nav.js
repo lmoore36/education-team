@@ -9,6 +9,8 @@ function Nav() {
                     <a href="/" class="w3-bar-item w3-button"> Home </a>
                     <a href="/login" class="w3-bar-item w3-button w3-hover-green"> Login </a>
                     <a href="/account" class="w3-bar-item w3-button w3-hover-blue"> Account</a>
+                    <a href="/feed" class="w3-bar-item w3-button w3-hover-blue"> Feed </a>
+                    <a href="/profile" class="w3-bar-item w3-button w3-hover-blue"> Profile </a>
                 </div>  
             </div>
         </body>

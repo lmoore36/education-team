@@ -1,13 +1,10 @@
-import Nav from './nav';
 import './globals.css';
+import './w3.css';
 
 export default function Home() {
   return (
     <main>
-      <Nav/> 
-      <div id='body'> 
-        <p> This is the main landing page. </p>
-      </div>
+      <a href="/login" id="w3-bar-item w3-button w3-hover-green"> Login </a>
     </main>
   );
 }
