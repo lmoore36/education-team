@@ -22,7 +22,7 @@ export async function login(formData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/account')
+  redirect('/feed')
 }
 
 export async function signup(formData) {
@@ -33,12 +33,18 @@ export async function signup(formData) {
     password: formData.get('password'),
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  const { error, data: userData } = await supabase.auth.signUp(data)
 
   if (error) {
     redirect('/error')
   }
 
+  if (userData && userData.user) {
+    await supabase
+      .from('profiles')
+      .upsert({ id: userData.user.id, email: userData.user.email })
+  } 
+
   revalidatePath('/', 'layout')
-  redirect('/account')
+  redirect('/feed')
 }

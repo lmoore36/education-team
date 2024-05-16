@@ -1,15 +1,14 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import Avatar from '@/app/account/avatar'
 
 export default function AccountForm({ user }) {
   const supabase = createClient()
   const [loading, setLoading] = useState(true)
   const [fullname, setFullname] = useState(null)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
+  const [bio, setBio] = useState(null)
+  const [email, setEmail] = useState(user?.email || '')
 
   const getProfile = useCallback(async () => {
     try {
@@ -17,7 +16,7 @@ export default function AccountForm({ user }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, website, avatar_url`)
+        .select(`full_name, username, bio, email`)
         .eq('id', user?.id)
         .single()
 
@@ -28,8 +27,7 @@ export default function AccountForm({ user }) {
       if (data) {
         setFullname(data.full_name)
         setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
+        setBio(data.bio)
       }
     } catch (error) {
       alert('Error loading user data!')
@@ -42,7 +40,7 @@ export default function AccountForm({ user }) {
     getProfile()
   }, [user, getProfile])
 
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({ username, bio, }) {
     try {
       setLoading(true)
 
@@ -50,8 +48,7 @@ export default function AccountForm({ user }) {
         id: user?.id,
         full_name: fullname,
         username,
-        website,
-        avatar_url,
+        bio,
         updated_at: new Date().toISOString(),
       })
       if (error) throw error
@@ -65,15 +62,6 @@ export default function AccountForm({ user }) {
 
   return (
     <div className="form-widget">
-     <Avatar
-        uid={user.id}
-        url={avatar_url}
-        size={150}
-        onUpload={(url) => {
-          setAvatarUrl(url)
-          updateProfile({ fullname, username, website, avatar_url: url })
-        }}
-      />
       <div>
         <label htmlFor="email">Email</label>
         <input id="email" type="text" value={user?.email} disabled />
@@ -97,19 +85,19 @@ export default function AccountForm({ user }) {
         />
       </div>
       <div>
-        <label htmlFor="website">Website</label>
+        <label htmlFor="bio">Bio</label>
         <input
-          id="website"
-          type="url"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
+          id="bio"
+          type="text"
+          value={bio || ''}
+          onChange={(e) => setBio(e.target.value)}
         />
       </div>
 
       <div>
         <button
           className="button primary block"
-          onClick={() => updateProfile({ fullname, username, website, avatar_url })}
+          onClick={() => updateProfile({ fullname, username, bio, })}
           disabled={loading}
         >
           {loading ? 'Loading ...' : 'Update'}
