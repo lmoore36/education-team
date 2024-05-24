@@ -1,14 +1,16 @@
-'use client'
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import Nav from '../nav';
 
-import Nav from '../nav'
-import PostForm from '@/components/post-form'
+export default async function Home() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data: tweets } = await supabase.from("posts").select();
 
-export default async function FeedPage() {
   return (
     <>
       <Nav />
       <div>
-        <PostForm />
+        {JSON.stringify(tweets, null, 2)};
       </div>
     </>
   )
