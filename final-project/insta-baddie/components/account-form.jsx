@@ -1,4 +1,5 @@
 'use client'
+import Nav from '../app/nav';
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 
@@ -8,7 +9,6 @@ export default function AccountForm({ user }) {
   const [fullname, setFullname] = useState(null)
   const [username, setUsername] = useState(null)
   const [bio, setBio] = useState(null)
-  const [email, setEmail] = useState(user?.email || '')
 
   const getProfile = useCallback(async () => {
     try {
@@ -16,7 +16,7 @@ export default function AccountForm({ user }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, bio, email`)
+        .select(`full_name, username, bio`)
         .eq('id', user?.id)
         .single()
 
@@ -61,56 +61,61 @@ export default function AccountForm({ user }) {
   }
 
   return (
-    <div className="form-widget">
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={user?.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="fullName">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          value={fullname || ''}
-          onChange={(e) => setFullname(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="bio">Bio</label>
-        <input
-          id="bio"
-          type="text"
-          value={bio || ''}
-          onChange={(e) => setBio(e.target.value)}
-        />
-      </div>
+    <main>
+      <Nav />
+      <div className="container">
+        <div className="form-widget">
+          <div>
+            <label htmlFor="email">Email</label>
+            <input id="email" type="text" value={user?.email} disabled />
+          </div>
+          <div>
+            <label htmlFor="fullName">Full Name</label>
+            <input
+              id="fullName"
+              type="text"
+              value={fullname || ''}
+              onChange={(e) => setFullname(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              value={username || ''}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="bio">Bio</label>
+            <input
+              id="bio"
+              type="text"
+              value={bio || ''}
+              onChange={(e) => setBio(e.target.value)}
+            />
+          </div>
 
-      <div>
-        <button
-          className="button primary block"
-          onClick={() => updateProfile({ fullname, username, bio, })}
-          disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
+          <div>
+            <button
+              className="button primary block"
+              onClick={() => updateProfile({ fullname, username, bio })}
+              disabled={loading}
+            >
+              {loading ? 'Loading ...' : 'Update'}
+            </button>
+          </div>
 
-      <div>
-        <form action="/auth/signout" method="post">
-          <button className="button block" type="submit">
-            Sign out
-          </button>
-        </form>
+          <div>
+            <form action="/auth/signout" method="post">
+              <button className="button block" type="submit">
+                Sign out
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-  )
+    </main>
+  );
 }

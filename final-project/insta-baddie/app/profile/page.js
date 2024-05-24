@@ -1,38 +1,45 @@
+'use client';
+
 import Nav from '../nav';
 import '../globals.css';
 import './profile.css';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { useClient } from '@/utils/supabase/client';
 
 export default function Home() {
-  useClient();
-
   const [fullname, setFullname] = useState('');
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
 
   useEffect(() => {
     const supabase = createClient();
-    const user = supabase.auth.user();
-    if (user) {
-      supabase
-        .from('profiles')
-        .select(`full_name, username, bio`)
-        .eq('id', user.id)
-        .then(({ data, error }) => {
-          if (error) {
-            console.error('Error loading user data:', error.message);
-          } else if (data) {
-            setFullname(data.full_name);
-            setUsername(data.username);
-            setBio(data.bio);
-          }
-        })
-        .catch(error => {
+
+    const fetchUserData = async () => {
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      
+      if (authError) {
+        console.error('Error fetching user:', authError.message);
+        return;
+      }
+
+      if (user) {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('full_name, username, bio')
+          .eq('id', user.id)
+          .single(); // Use .single() to get a single row
+
+        if (error) {
           console.error('Error loading user data:', error.message);
-        });
-    }
+        } else if (data) {
+          setFullname(data.full_name);
+          setUsername(data.username);
+          setBio(data.bio);
+        }
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   return (

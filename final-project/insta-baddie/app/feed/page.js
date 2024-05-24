@@ -1,13 +1,15 @@
-import Nav from '../nav';
-import '../globals.css';
+'use client'
 
-export default function Home() {
+import Nav from '../nav'
+import PostForm from '@/components/post-form'
+
+export default async function FeedPage() {
   return (
-      <main>
-        <Nav/> 
-        <div id='body'> 
-          <p> This is your feed </p>
-        </div>
-      </main>
-    );
-  }
+    <>
+      <Nav />
+      <div>
+        <PostForm />
+      </div>
+    </>
+  )
+}
