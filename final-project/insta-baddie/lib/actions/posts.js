@@ -34,16 +34,9 @@ export default function Posts({ posts }) {
     };
   }, [supabase, router]);
 
-  console.log(optimisticPosts)
-  const following_posts = optimisticPosts.filter(follower_check);
-
-  function follower_check(post) {
-
-    return isFollowing(post)
-  }
 
   return (
-    following_posts.map(post => (
+    optimisticPosts.map(post => (
       <div key={post.id}>
         <div className="flex w-full p-8 border-b border-gray-300">
           <span className="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full"></span>
