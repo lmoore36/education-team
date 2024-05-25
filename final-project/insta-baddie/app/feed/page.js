@@ -1,8 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import Nav from '../nav';
-import NewPost from '@/components/post-form';
+import NewPost from '@/components/new-post-server';
 import Posts from '@/lib/actions/posts'
 
 
