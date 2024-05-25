@@ -4,8 +4,10 @@ import { useEffect, useOptimistic } from 'react';
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import isFollowing from './following'
 
 export default function Posts({ posts }) {
+  
   const [optimisticPosts, addOptimisticPost] = useOptimistic(
     posts,
     (currentOptimisticPosts, newPost) => {
@@ -20,9 +22,7 @@ export default function Posts({ posts }) {
   const router = useRouter();
 
   useEffect(() => {
-    const channel = supabase
-      .channel("realtime posts")
-      .on(
+    const channel = supabase.channel("realtime posts").on(
         "postgres_changes",
         { event: "*", schema: "public", table: "posts" },
         (payload) => { router.refresh(); }
@@ -34,8 +34,16 @@ export default function Posts({ posts }) {
     };
   }, [supabase, router]);
 
+  console.log(optimisticPosts)
+  const following_posts = optimisticPosts.filter(follower_check);
+
+  function follower_check(post) {
+
+    return isFollowing(post)
+  }
+
   return (
-    optimisticPosts.map(post => (
+    following_posts.map(post => (
       <div key={post.id}>
         <div className="flex w-full p-8 border-b border-gray-300">
           <span className="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full"></span>
@@ -47,7 +55,7 @@ export default function Posts({ posts }) {
               </Link>
             </div>
             <p className="mt-1">
-              {post.text} <a className="underline" href="#">#hashtag</a>
+              {post.text}
             </p>
             <div className="flex mt-2">
               <Likes post={post} addOptimisticPost={addOptimisticPost} />

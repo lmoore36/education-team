@@ -6,10 +6,10 @@ import './profile.css';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
-import FollowButton from '@/lib/actions/following'; // Adjust the path as necessary
+import FollowButton from '@/lib/actions/following';
 
 export default function ProfilePage() {
-  const { username } = useParams(); // Get the dynamic username from the route
+  const { username } = useParams();
   const [fullname, setFullname] = useState('');
   const [bio, setBio] = useState('');
   const [profileId, setProfileId] = useState('');
