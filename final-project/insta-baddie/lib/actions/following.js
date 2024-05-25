@@ -9,26 +9,35 @@ export default function FollowButton({ profileId, isInitiallyFollowing }) {
   const supabase = createClientComponentClient();
 
   const handleFollow = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    try {
+      const { data: { user }, error } = await supabase.auth.getUser();
 
-    if (user) {
-      if (isFollowing) {
-        setIsFollowing(false);
-        await supabase
-          .from('follows')
-          .delete()
-          .match({ follower_id: user.id, followed_id: profileId });
-      } else {
-        setIsFollowing(true);
-        await supabase
-          .from('follows')
-          .insert({ follower_id: user.id, followed_id: profileId });
+      if (error) {
+        console.error('Error fetching user:', error.message);
+        return;
       }
-      router.refresh();
+
+      if (user) {
+        if (isFollowing) {
+          setIsFollowing(false);
+          await supabase
+            .from('followers')
+            .delete()
+            .match({ follower: user.id, followee: profileId });
+        } else {
+          setIsFollowing(true);
+          await supabase
+            .from('followers')
+            .insert({ follower: user.id, followee: profileId });
+        }
+        router.refresh();
+      }
+    } catch (error) {
+      console.error('Error handling follow:', error.message);
     }
   };
+
+  console.log('isFollowing:', isFollowing);
 
   return (
     <button onClick={handleFollow}>
