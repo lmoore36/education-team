@@ -12,35 +12,52 @@ export default function Home() {
   const [bio, setBio] = useState('');
 
   useEffect(() => {
-    const supabase = createClient();
-
     const fetchUserData = async () => {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      
-      if (authError) {
-        console.error('Error fetching user:', authError.message);
-        return;
-      }
-
-      if (user) {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('full_name, username, bio')
-          .eq('id', user.id)
-          .single(); // Use .single() to get a single row
-
-        if (error) {
-          console.error('Error loading user data:', error.message);
-        } else if (data) {
-          setFullname(data.full_name);
-          setUsername(data.username);
-          setBio(data.bio);
+      try {
+        const supabase = createClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+  
+        if (authError) {
+          console.error('Error fetching user:', authError.message);
+          return;
         }
+  
+        if (user) {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('full_name, username, bio')
+            .eq('id', user.id)
+            .single();
+  
+          if (error) {
+            console.error('Error loading user data:', error.message);
+          } else if (data) {
+            setFullname(data.full_name);
+            setUsername(data.username);
+            setBio(data.bio);
+          }
+  
+          const { data: followData, error: followError } = await supabase
+            .from('followers')
+            .select('*')
+            .eq('follower', user.id)
+            .eq('followee', data.id)
+            .single();
+  
+          if (followError) {
+            console.error('Error checking follow status:', followError.message);
+          } else {
+            setIsFollowing(followData != null);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
       }
     };
-
+  
     fetchUserData();
   }, []);
+  
 
   return (
       <main>

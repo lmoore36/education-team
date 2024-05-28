@@ -4,7 +4,6 @@ import { useEffect, useOptimistic } from 'react';
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import isFollowing from './following'
 
 export default function Posts({ posts }) {
   
