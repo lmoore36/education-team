@@ -22,14 +22,22 @@ export default function FollowButton({ profileId }) {
             .eq('followee', profileId)
             .single();
 
-          console.log(existingFollows);  
-
-          console.log(user.id);
-          console.log(profileId);
-            
           // Set user_is_following to true if the record exists, otherwise set it to false
           setIsFollowing(existingFollows != null);
           console.log('follows?:', user_is_following);
+
+          // Ensure the user is following themselves
+          const { data: selfFollow } = await supabase
+          .from('followers')
+          .select('*')
+          .eq('follower', user.id)
+          .eq('followee', user.id)
+          .single();
+
+          if (!selfFollow) {
+          // If the user is not following themselves, make them follow themselves
+          await supabase.from('followers').insert({ follower: user.id, followee: user.id });
+      }
         }
       } catch (error) {
         console.error('Error fetching follow status:', error.message);

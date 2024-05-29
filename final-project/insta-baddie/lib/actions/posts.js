@@ -1,14 +1,18 @@
 "use client";
 import Likes from '@/lib/actions/likes';
-import { useEffect, useOptimistic } from 'react';
+import { useEffect, useState, useOptimistic } from 'react';
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function Posts({ posts }) {
-  
-  const [optimisticPosts, addOptimisticPost] = useOptimistic(
-    posts,
+
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const supabase = createClientComponentClient();
+  const router = useRouter();
+
+  const [optimisticFilteredPosts, addOptimisticFilteredPost] = useOptimistic(
+    filteredPosts,
     (currentOptimisticPosts, newPost) => {
       const newOptimisticPosts = [...currentOptimisticPosts];
       const index = newOptimisticPosts.findIndex(post => post.id === newPost.id);
@@ -16,9 +20,6 @@ export default function Posts({ posts }) {
       return newOptimisticPosts;
     }
   );
-
-  const supabase = createClientComponentClient();
-  const router = useRouter();
 
   useEffect(() => {
     const channel = supabase.channel("realtime posts").on(
@@ -33,9 +34,40 @@ export default function Posts({ posts }) {
     };
   }, [supabase, router]);
 
+  useEffect(() => {
+    const fetchFollowedPosts = async () => {
+      try {
+        // Fetch the current user's follow status
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        // Get the list of users the current user is following
+        const { data: followedUsers, error: followError } = await supabase
+          .from('followers')
+          .select('followee')
+          .eq('follower', user.id);
+
+        if (followError) {
+          console.error('Error fetching followed users:', followError.message);
+          return;
+        }
+
+        // Filter posts to include only those made by users the current user is following
+        const filteredPosts = posts.filter(post =>
+          followedUsers.some(followedUser => followedUser.followee === post.user_id)
+        );
+        setFilteredPosts(filteredPosts);
+      } catch (error) {
+        console.error('Error fetching followed posts:', error.message);
+      }
+    };
+
+    fetchFollowedPosts();
+  }, [posts, supabase]);
+
 
   return (
-    optimisticPosts.map(post => (
+    optimisticFilteredPosts.map(post => (
       <div key={post.id}>
         <div className="flex w-full p-8 border-b border-gray-300">
           <span className="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full"></span>
@@ -50,7 +82,7 @@ export default function Posts({ posts }) {
               {post.text}
             </p>
             <div className="flex mt-2">
-              <Likes post={post} addOptimisticPost={addOptimisticPost} />
+              <Likes post={post} addOptimisticFilteredPost={addOptimisticFilteredPost} />
               {/* <button className="text-sm font-semibold">Like</button> */}
               <button className="ml-2 text-sm font-semibold">Reply</button>
               <button className="ml-2 text-sm font-semibold">Share</button>

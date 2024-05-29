@@ -17,7 +17,8 @@ export default async function Home() {
   }
 
   const { data } = await supabase.from("posts").select("*, profiles(*), likes(*)");
-  
+
+
   const posts =
     data?.map((post) => ({
       ...post,
@@ -25,6 +26,8 @@ export default async function Home() {
         (like) => like.user_id === session.user.id),
       likes: post.likes.length,
     })) ?? [];
+
+    console.log('here is my page')
 
   return (
     <main>
