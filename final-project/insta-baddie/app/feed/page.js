@@ -37,7 +37,8 @@ export default async function Home() {
         <div class="flex flex-col w-50 py-4 pr-3">
           <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="/feed">Home</a>
           <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Discover</a>
-          <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Notifications</a>            <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Inbox</a>
+          <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Notifications</a>            
+          <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Inbox</a>
           <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Saved Posts</a>
           <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="/profile">Profile</a>
           <a class="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="/account">Settings</a>
@@ -46,7 +47,7 @@ export default async function Home() {
         {/* MIDDLE OF PAGE - NEW POST AND FEED */}
         <div class="flex flex-col flex-grow border-l border-r border-gray-300">
           <div class="flex justify-between flex-shrink-0 px-8 py-4 border-b border-gray-300">
-            <h1 class="text-xl font-semibold">Feed Title</h1>           
+            <h1 class="text-xl font-semibold"> Posts Feed </h1>           
           </div>
          
           <div>          

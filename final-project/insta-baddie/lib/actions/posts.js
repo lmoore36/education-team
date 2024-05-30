@@ -56,7 +56,7 @@ export default function Posts({ posts }) {
         const filteredPosts = posts.filter(post =>
           followedUsers.some(followedUser => followedUser.followee === post.user_id)
         );
-        setFilteredPosts(filteredPosts);
+        setFilteredPosts(filteredPosts.reverse());
       } catch (error) {
         console.error('Error fetching followed posts:', error.message);
       }

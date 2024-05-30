@@ -66,7 +66,7 @@ export default function AccountForm({ user }) {
       <div className="container">
         <div className="form-widget">
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" lassName="black-text">Email</label>
             <input id="email" type="text" value={user?.email} disabled />
           </div>
           <div>

@@ -69,21 +69,6 @@ export default function Home() {
           <p className="profile-username">@{username}</p>
           <p className="profile-bio">{bio}</p>
         </div>
-      
-        <div className="profile-stats">
-          <div>
-            <h2>Tweets</h2>
-            <p>100</p>           
-          </div>
-          <div>
-            <h2>Following</h2>
-            <p>50</p>
-          </div>
-          <div>
-            <h2>Followers</h2>
-            <p>200</p>
-          </div>
-        </div>
 
         <div className="profile-timeline">
           {userPosts.map((post, index) => (

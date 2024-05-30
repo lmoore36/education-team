@@ -66,21 +66,6 @@ export default function ProfilePage() {
             {profileId && <FollowButton profileId={profileId} />}
           </div>
 
-          <div className="profile-stats">
-            <div>
-              <h2>Tweets</h2>
-              <p>100</p>
-            </div>
-            <div>
-              <h2>Following</h2>
-              <p>50</p>
-            </div>
-            <div>
-              <h2>Followers</h2>
-              <p>200</p>
-            </div>
-          </div>
-
           <div className="profile-timeline">
             {profilePosts.map((post, index) => (
           <div key={index} className="post">

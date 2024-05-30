@@ -17,6 +17,8 @@ export default function Likes({ post, addOptimisticFilteredPost}) {
         await supabase.from("likes").insert({ user_id: user.id, post_id: post.id });
       }
       router.refresh();
+
+      console.log(post.user_has_liked_post);
     }
   };
 
@@ -31,7 +33,7 @@ export default function Likes({ post, addOptimisticFilteredPost}) {
         strokeLinecap="round"
         strokeLinejoin="round"
         className={`group-hover:fill-red-600 group-hover:stroke-red-600 ${
-          post.user_has_liked_tweet
+          post.user_has_liked_post
             ? "fill-red-600 stroke-red-600"
             : "fill-none stroke-gray-500"
         }`}
@@ -40,7 +42,7 @@ export default function Likes({ post, addOptimisticFilteredPost}) {
       </svg>
       <span
         className={`ml-2 text-sm group-hover:text-red-600 ${
-          post.user_has_liked_tweet ? "text-red-600" : "text-gray-500"
+          post.user_has_liked_post ? "text-red-600" : "text-gray-500"
         }`}
       >
         {post.likes}
