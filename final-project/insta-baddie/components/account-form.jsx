@@ -1,7 +1,9 @@
-'use client'
+"use client";
+
 import Nav from '../app/nav';
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
+import './account-update.css';
 
 export default function AccountForm({ user }) {
   const supabase = createClient()
@@ -13,7 +15,6 @@ export default function AccountForm({ user }) {
   const getProfile = useCallback(async () => {
     try {
       setLoading(true)
-
       const { data, error, status } = await supabase
         .from('profiles')
         .select(`full_name, username, bio`)
@@ -40,10 +41,9 @@ export default function AccountForm({ user }) {
     getProfile()
   }, [user, getProfile])
 
-  async function updateProfile({ username, bio, }) {
+  async function updateProfile({ username, bio }) {
     try {
       setLoading(true)
-
       const { error } = await supabase.from('profiles').upsert({
         id: user?.id,
         full_name: fullname,
@@ -66,34 +66,43 @@ export default function AccountForm({ user }) {
       <div className="container">
         <div className="form-widget">
           <div>
-            <label htmlFor="email" lassName="black-text">Email</label>
-            <input id="email" type="text" value={user?.email} disabled />
+            <label htmlFor="email" className="text-color">Email</label>
+            <input 
+              id="email" 
+              type="text" 
+              value={user?.email} 
+              className="input-field"
+              disabled 
+            />
           </div>
           <div>
-            <label htmlFor="fullName">Full Name</label>
+            <label htmlFor="fullName" className="text-color">Full Name</label>
             <input
               id="fullName"
               type="text"
               value={fullname || ''}
               onChange={(e) => setFullname(e.target.value)}
+              className="input-field"
             />
           </div>
           <div>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username" className="text-color">Username</label>
             <input
               id="username"
               type="text"
               value={username || ''}
               onChange={(e) => setUsername(e.target.value)}
+              className="input-field"
             />
           </div>
           <div>
-            <label htmlFor="bio">Bio</label>
+            <label htmlFor="bio" className="text-color">Bio</label>
             <input
               id="bio"
               type="text"
               value={bio || ''}
               onChange={(e) => setBio(e.target.value)}
+              className="input-field"
             />
           </div>
 
@@ -109,7 +118,7 @@ export default function AccountForm({ user }) {
 
           <div>
             <form action="/auth/signout" method="post">
-              <button className="button block" type="submit">
+              <button className="button block sign-out" type="submit">
                 Sign out
               </button>
             </form>

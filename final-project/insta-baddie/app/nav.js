@@ -1,14 +1,14 @@
 import React from 'react';
-import './w3.css';
+import './nav.css';
 
 function Nav() {
     return (
-        <div className="w3-container">
-            <div className="w3-bar w3-border w3-light-grey">
-                <a href="/feed" className="w3-bar-item w3-button w3-hover-blue"> Feed </a>
-                <a href="/account" className="w3-bar-item w3-button w3-hover-blue"> Account Settings</a>
-                <a href="/profile" className="w3-bar-item w3-button w3-hover-blue"> Profile </a>
-            </div>  
+        <div className="nav-container">
+            <div className="nav-bar">
+                <a href="/feed" className="nav-item nav-button">Feed</a>
+                <a href="/account" className="nav-item nav-button">Account Settings</a>
+                <a href="/profile" className="nav-item nav-button">Profile</a>
+            </div>
         </div>
     );
 }

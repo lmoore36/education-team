@@ -40,7 +40,7 @@ export default function ProfilePage() {
       if (postsError) {
         console.error('Error fetching user posts:', postsError.message);
       } else {
-        setProfilePosts( profilePostsData || []);        
+        setProfilePosts( profilePostsData.reverse() || []);        
       }
 
     };

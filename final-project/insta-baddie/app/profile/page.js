@@ -46,7 +46,7 @@ export default function Home() {
           if (postsError) {
           console.error('Error fetching user posts:', postsError.message);
         } else {
-          setUserPosts(userPostsData || []);
+          setUserPosts(userPostsData.reverse() || []);
         }
       }
     } catch (error) {

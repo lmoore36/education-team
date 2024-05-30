@@ -17,5 +17,5 @@ export default function NewPost() {
     }
   };
 
-  return <NewPostForm addPost={addPost} />; // Render the client component
+  return <NewPostForm addPost={addPost} />; 
 }

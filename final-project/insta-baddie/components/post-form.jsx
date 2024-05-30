@@ -22,7 +22,7 @@ export default function NewPostForm({ addPost }) {
       <div className="flex flex-col flex-grow ml-4">
         <input
           name="text"
-          className="p-3 bg-transparent border border-black rounded-sm"
+          className="p-3 bg-transparent border border-white rounded-sm"
           placeholder="What's happening?"
         ></input>
         <div className="flex justify-between mt-2">
