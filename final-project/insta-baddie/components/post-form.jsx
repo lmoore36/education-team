@@ -23,7 +23,7 @@ export default function NewPostForm({ addPost }) {
         <input
           name="text"
           className="p-3 bg-transparent border border-white rounded-sm"
-          placeholder="What's happening?"
+          placeholder="What&apos;s happening?"
         ></input>
         <div className="flex justify-between mt-2">
           <button
