@@ -18,11 +18,11 @@ export default function NewPostForm({ addPost }) {
       className="flex w-full p-8 border-b-4 border-gray-300"
       onSubmit={handleSubmit}
     >
-      <span className="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full"></span>
+      <span class="flex-shrink-0 w-12 h-12 rounded-full" style={{ backgroundColor: '#434961' }}></span>
       <div className="flex flex-col flex-grow ml-4">
         <input
           name="text"
-          className="p-3 bg-transparent border border-gray-500 rounded-sm"
+          className="p-3 bg-transparent border border-black rounded-sm"
           placeholder="What's happening?"
         ></input>
         <div className="flex justify-between mt-2">
@@ -34,7 +34,7 @@ export default function NewPostForm({ addPost }) {
           </button>
           <button
             type="submit"
-            className="flex items-center h-8 px-3 text-xs rounded-sm bg-gray-300 hover:bg-gray-400"
+            className="flex items-center h-8 px-3 text-xs rounded-sm hover:bg-gray-400"
           >
             Post
           </button>

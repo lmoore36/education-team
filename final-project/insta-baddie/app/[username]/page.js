@@ -13,6 +13,7 @@ export default function ProfilePage() {
   const [fullname, setFullname] = useState('');
   const [bio, setBio] = useState('');
   const [profileId, setProfileId] = useState('');
+  const [profilePosts, setProfilePosts] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -30,12 +31,27 @@ export default function ProfilePage() {
         setBio(user.bio);
         setProfileId(user.id);
       }
+
+      const { data: profilePostsData, error: postsError } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('user_id', user.id);
+
+      if (postsError) {
+        console.error('Error fetching user posts:', postsError.message);
+      } else {
+        setProfilePosts( profilePostsData || []);        
+      }
+
     };
 
     if (username) {
       fetchUserData();
     }
+
   }, [username]);
+
+  
 
   return (
     <main>
@@ -66,15 +82,19 @@ export default function ProfilePage() {
           </div>
 
           <div className="profile-timeline">
-            {/* Replace with actual tweets */}
-            <div className="tweet">
-              <p>This is a tweet!</p>
-              <p className="tweet-date">1 hour ago</p>
+            {profilePosts.map((post, index) => (
+          <div key={index} className="post">
+            <div className="flex w-full p-8 border-b border-gray-300">
+              <span className="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full"></span>
+              <div className="flex flex-col flex-grow ml-4">
+                <div className="flex">
+                  <span className="font-semibold" style={{ color: 'black' }}>{fullname}</span>
+                  <div className="ml-1" style={{ color: 'black' }}>@{username}</div>
+                </div>
+                  <p className="mt-1" style={{ color: 'black' }}> {post.text} </p>
+              </div>                
             </div>
-            <div className="tweet">
-              <p>Another tweet here.</p>
-              <p className="tweet-date">2 hours ago</p>
-            </div>
+          </div> ))}
           </div>
         </div>
       </div>

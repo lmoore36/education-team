@@ -60,36 +60,55 @@ export default function Posts({ posts }) {
       } catch (error) {
         console.error('Error fetching followed posts:', error.message);
       }
+
+      
+      
     };
 
     fetchFollowedPosts();
   }, [posts, supabase]);
 
+  const colors = [
+    { backgroundColor: '#b9d2b5' }, // debut
+    { backgroundColor: '#f4cb8d' }, // fearless
+    { backgroundColor: '#d1b2d2' }, // speak now
+    { backgroundColor: '#823549' }, // red
+    { backgroundColor: '#b5e9f6' }, // 1989
+    { backgroundColor: '#847e80' }, // reputation
+    { backgroundColor: '#f9b2d0' }, // lover
+    { backgroundColor: '#cfcac6' }, // folklore
+    { backgroundColor: '#c8ae95' }, // evermore
+    { backgroundColor: '#434961' }, // midnights
+    { backgroundColor: '#edebe7' }  // tortured poets
+
+  ];
 
   return (
-    optimisticFilteredPosts.map(post => (
-      <div key={post.id}>
-        <div className="flex w-full p-8 border-b border-gray-300">
-          <span className="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full"></span>
-          <div className="flex flex-col flex-grow ml-4">
-            <div className="flex">
-              <span className="font-semibold">{post?.profiles?.full_name}</span>
-              <Link href={`/${post?.profiles?.username}`}>
-                <div className="ml-1">@{post?.profiles?.username}</div>
-              </Link>
-            </div>
-            <p className="mt-1">
-              {post.text}
-            </p>
-            <div className="flex mt-2">
-              <Likes post={post} addOptimisticFilteredPost={addOptimisticFilteredPost} />
-              {/* <button className="text-sm font-semibold">Like</button> */}
-              <button className="ml-2 text-sm font-semibold">Reply</button>
-              <button className="ml-2 text-sm font-semibold">Share</button>
+    optimisticFilteredPosts.map((post, index) => {
+      // Pick a color based on the index
+      const color = colors[index % colors.length];
+
+      return (
+        <div key={post.id}>
+          <div className="flex w-full p-8 border-b border-gray-300">
+          <span className="flex-shrink-0 w-12 h-12 rounded-full" style={color}></span>
+            <div className="flex flex-col flex-grow ml-4">
+              <div className="flex">
+                <span className="font-semibold">{post?.profiles?.full_name}</span>
+                <Link href={`/${post?.profiles?.username}`}>
+                  <div className="ml-1">@{post?.profiles?.username}</div>
+                </Link>
+              </div>
+              <p className="mt-1">{post.text}</p>
+              <div className="flex mt-2">
+                <Likes post={post} addOptimisticFilteredPost={addOptimisticFilteredPost} />
+                <button className="ml-2 text-sm font-semibold">Reply</button>
+                <button className="ml-2 text-sm font-semibold">Share</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    ))
+      );
+    })
   );
 }

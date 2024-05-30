@@ -4,17 +4,18 @@ import Nav from '../nav';
 import '../globals.css';
 import './profile.css';
 import { useEffect, useState } from 'react';
-import { createClient } from '@/utils/supabase/client';
+import { createClientComponentClient, } from "@supabase/auth-helpers-nextjs";
 
 export default function Home() {
   const [fullname, setFullname] = useState('');
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
+  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const supabase = createClient();
+        const supabase = createClientComponentClient();
         const { data: { user }, error: authError } = await supabase.auth.getUser();
   
         if (authError) {
@@ -37,68 +38,70 @@ export default function Home() {
             setBio(data.bio);
           }
   
-          const { data: followData, error: followError } = await supabase
-            .from('followers')
-            .select('*')
-            .eq('follower', user.id)
-            .eq('followee', data.id)
-            .single();
-  
-          if (followError) {
-            console.error('Error checking follow status:', followError.message);
-          } else {
-            setIsFollowing(followData != null);
-          }
+          const { data: userPostsData, error: postsError } = await supabase
+          .from('posts')
+          .select('*')
+          .eq('user_id', user.id);
+
+          if (postsError) {
+          console.error('Error fetching user posts:', postsError.message);
+        } else {
+          setUserPosts(userPostsData || []);
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error.message);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching user data:', error.message);
+    }
+  };
   
     fetchUserData();
   }, []);
   
 
   return (
-      <main>
-        <Nav/> 
-        <div className="container">
-          <div className="profile-section">
-            <div className="profile-header">
-              <img src="https://picsum.photos/200/300" alt="Random Image" className="profile-picture" />
-              <h1 className="profile-name">{fullname}</h1>
-              <p className="profile-username">@{username}</p>
-              <p className="profile-bio">{bio}</p>
-            </div>
-        
-            <div className="profile-stats">
-              <div>
-                <h2>Tweets</h2>
-                <p>100</p>
-              </div>
-              <div>
-                <h2>Following</h2>
-                <p>50</p>
-              </div>
-              <div>
-                <h2>Followers</h2>
-                <p>200</p>
-              </div>
-            </div>
-
-            <div className="profile-timeline">
-        {/* Replace with actual tweets */}
-              <div className="tweet">
-                <p>This is a tweet!</p>
-                <p className="tweet-date">1 hour ago</p>
-              </div>
-              <div className="tweet">
-                <p>Another tweet here.</p>
-                <p className="tweet-date">2 hours ago</p>
-              </div>
-            </div>
+    <main>
+      <Nav/> 
+      <div className="container">          
+      <div className="profile-section">
+        <div className="profile-header">
+          <img src="https://picsum.photos/200/300" alt="Random Image" className="profile-picture" />
+          <h1 className="profile-name">{fullname}</h1>
+          <p className="profile-username">@{username}</p>
+          <p className="profile-bio">{bio}</p>
+        </div>
+      
+        <div className="profile-stats">
+          <div>
+            <h2>Tweets</h2>
+            <p>100</p>           
+          </div>
+          <div>
+            <h2>Following</h2>
+            <p>50</p>
+          </div>
+          <div>
+            <h2>Followers</h2>
+            <p>200</p>
           </div>
         </div>
-      </main>
-    );
-  }
+
+        <div className="profile-timeline">
+          {userPosts.map((post, index) => (
+          <div key={index} className="post">
+            <div className="flex w-full p-8 border-b border-gray-300">
+              <span className="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full"></span>
+              <div className="flex flex-col flex-grow ml-4">
+                <div className="flex">
+                  <span className="font-semibold" style={{ color: 'black' }}>{fullname}</span>
+                  <div className="ml-1" style={{ color: 'black' }}>@{username}</div>
+                </div>
+                  <p className="mt-1" style={{ color: 'black' }}> {post.text} </p>
+              </div>                
+            </div>
+          </div> ))}
+        </div>
+      </div>
+      </div>
+    </main>    
+  );
+}
