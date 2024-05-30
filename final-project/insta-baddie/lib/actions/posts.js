@@ -54,15 +54,13 @@ export default function Posts({ posts }) {
 
         // Filter posts to include only those made by users the current user is following
         const filteredPosts = posts.filter(post =>
-          followedUsers.some(followedUser => followedUser.followee === post.user_id)
-        );
+          followedUsers.some(followedUser => followedUser.followee === post.user_id))
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).reverse();
+
         setFilteredPosts(filteredPosts.reverse());
       } catch (error) {
         console.error('Error fetching followed posts:', error.message);
       }
-
-      
-      
     };
 
     fetchFollowedPosts();

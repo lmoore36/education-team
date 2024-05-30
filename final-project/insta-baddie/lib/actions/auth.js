@@ -39,5 +39,5 @@ export async function signup(formData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/feed");
+  redirect("/verify-email");
 }

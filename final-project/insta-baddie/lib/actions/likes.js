@@ -11,11 +11,38 @@ export default function Likes({ post, addOptimisticFilteredPost}) {
 
     if (user) {
       if (post.user_has_liked_post) {
-        addOptimisticFilteredPost({post,likes: post.likes-1,user_has_liked_post: !post.user_has_liked_post,})
-        await supabase.from("likes").delete().match({ user_id: user.id, post_id: post.id });
+
+        addOptimisticFilteredPost({
+          post,
+          likes: post.likes-1,
+          user_has_liked_post: !post.user_has_liked_post,
+        })
+
+        // remove like from "likes" table
+        await supabase
+          .from("likes")
+          .delete().
+          match({ user_id: user.id, post_id: post.id });
+
+          // decrease like_count in "posts" table
+        await supabase
+          .from('posts')
+          .update({ like_count: post.like_count - 1 })
+          .match({ id: post.id });
       } else {
-        await supabase.from("likes").insert({ user_id: user.id, post_id: post.id });
+
+        // add like to "likes" table
+        await supabase
+          .from("likes")
+          .insert({ user_id: user.id, post_id: post.id });
+
+        // increase like_count in "posts" table 
+        await supabase
+          .from('posts')
+          .update({ like_count: post.like_count + 1 })
+          .match({ id: post.id });
       }
+      
       router.refresh();
 
       console.log(post.user_has_liked_post);
