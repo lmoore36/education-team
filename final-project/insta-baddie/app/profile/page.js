@@ -64,7 +64,7 @@ export default function Home() {
       <div className="container">          
       <div className="profile-section">
         <div className="profile-header">
-          <img src="https://picsum.photos/200/300" alt="Random Image" className="profile-picture" />
+          <image src="https://picsum.photos/200/300" alt="Random Image" className="profile-picture" />
           <h1 className="profile-name">{fullname}</h1>
           <p className="profile-username">@{username}</p>
           <p className="profile-bio">{bio}</p>

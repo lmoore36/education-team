@@ -20,7 +20,7 @@ export default function Home() {
             </div>  
           
             <div class="about-image">
-              <img src="/IMG_1239.JPEG"/>
+              <image src="/IMG_1239.JPEG"/>
             </div>
         </div>
 
