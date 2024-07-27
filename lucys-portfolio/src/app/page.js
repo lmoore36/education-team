@@ -1,8 +1,20 @@
+import Hero from "./components/hero";
+import About from "./components/about";
+import Skills from "./components/skills";
+import Projects from "./components/projects";
+import Contact from "./components/contact";
+
+
 export default function HomePage() {
   return (
     <>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the main content of the page.</p>
+      <div>
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
+      </div>
     </>
   );
 }
