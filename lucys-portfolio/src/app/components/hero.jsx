@@ -5,10 +5,10 @@ const Hero = () => {
     <div className="hero-container">
       <Image src='/images/profile.jpeg' className="profile-img" width={300} height={300} alt="Joe's personal headshot" />
       <div className="hero-text">
-        <h1>Hey, I'm Joe 👋</h1>
+        <h2>Hi, I'm Lucy!</h2>
         <p>
-          I'm a software developer based in Lagos, Nigeria. I specialize in building (and occasionally designing)
-          exceptional websites, applications, and everything in between.
+          I'm a student at the University of North Carolina in Chapel Hill, graduating Spring 2026. 
+          I am double majoring in Computer Science and Peace, War, and Defense with a minor in Data Science.
         </p>
         <div className="social-icons">
           <a

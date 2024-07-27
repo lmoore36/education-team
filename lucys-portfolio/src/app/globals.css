@@ -78,7 +78,7 @@ li {
 }
 
 .cta-btn {
-  background-color: #FFCC1A;
+  background-color: #da85ff;
   color: #1D1E20;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -141,7 +141,7 @@ hr {
 /* Hero */
 
 .hero-container {
-  height: 90vh;
+  height: 45vh;
   display: flex;
   justify-content: center;
   align-items: center;
