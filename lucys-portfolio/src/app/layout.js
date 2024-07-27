@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
-import Navbar from './components/navbar';
-import Footer from './components/footer';
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
+import Hero from "./components/hero";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -13,9 +14,24 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Navbar/>
-      <body className={inter.className}>{children}</body>
-      <Footer/>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="description" content={metadata.description} />
+        <title>{metadata.title}</title>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
+      </head>
+      <body className={inter.className}>
+        <Navbar />
+        <Hero/>
+        <main>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

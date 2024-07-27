@@ -1,10 +1,8 @@
-import RootLayout from './layout';
-import './globals.css';
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <home>
-      <RootLayout/>
-    </home>
+    <>
+      <h1>Welcome to the Home Page</h1>
+      <p>This is the main content of the page.</p>
+    </>
   );
 }
