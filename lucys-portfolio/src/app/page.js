@@ -3,6 +3,7 @@ import About from "./components/about";
 import Skills from "./components/skills";
 import Projects from "./components/projects";
 import Contact from "./components/contact";
+import "./globals.css";
 
 
 export default function HomePage() {
@@ -11,8 +12,8 @@ export default function HomePage() {
       <div>
         <Hero />
         <About />
-        <Skills />
         <Projects />
+        <Skills />
         <Contact />
       </div>
     </>

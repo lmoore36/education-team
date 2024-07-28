@@ -1,10 +1,10 @@
 export const projectData = [
     {
       id: 1,
-      title: 'Todo List App',
+      title: 'Twitter Clone',
       description:
-        'A simple Todo List App built with JavaScript. All datas are stored in localstorage. It helps users check list out their plans and tick as they do them.',
-      gitHubLink: 'https://github.com/olawanlejoel/Todo-List-App',
+        'A fully functional Twitter clone made with Node.js, React, and JavaScript. Contains following, posting, liking, and searching features.',
+      gitHubLink: 'https://github.com/lmoore36/social-media-clone',
     },
     {
       id: 2,

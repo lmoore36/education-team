@@ -363,12 +363,17 @@ hr {
 
 .project-card .folder-icon {
   font-size: 35px;
-  color: #FFCC17;
+  color: #026daa;
 }
 
 .project-header .small-icons {
   display: flex;
   gap: 0 5px;
+}
+
+.project-title {
+  font-size: 25px;
+  color: lightblue;
 }
 
 .project-card .small-icons a {
@@ -378,7 +383,7 @@ hr {
 }
 
 .project-card .small-icons a:hover {
-  color: #FFCC17;
+  color: #ff178b;
 }
 
 .project-card .project h3 {
@@ -389,7 +394,7 @@ hr {
 .project-card .project p {
   font-size: 16px;
   margin-bottom: 10px;
-  color: #b3b3b3;
+  color: #d4cbcb;
 }
 
 /* contact */

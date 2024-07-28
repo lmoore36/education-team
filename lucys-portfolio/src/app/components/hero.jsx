@@ -11,16 +11,16 @@ const Hero = () => {
           I am double majoring in Computer Science and Peace, War, and Defense with a minor in Data Science.
         </p>
         <div className="social-icons">
-          <a
+          {/* <a
             href="https://twitter.com/olawanle_joel"
             aria-label="Twitter"
             target="_blank"
             rel="noopener noreferrer"
           >
             <i className="fa-brands fa-twitter"></i>
-          </a>
+          </a> */}
           <a
-            href="https://github.com/olawanlejoel"
+            href="https://github.com/lmoore36"
             aria-label="GitHub"
             target="_blank"
             rel="noopener noreferrer"
@@ -28,7 +28,7 @@ const Hero = () => {
             <i className="fa-brands fa-github"></i>
           </a>
           <a
-            href="https://www.linkedin.com/in/olawanlejoel/"
+            href="https://www.linkedin.com/in/lucy-moore36/"
             aria-label="LinkedIn"
             target="_blank"
             rel="noopener noreferrer"

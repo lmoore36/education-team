@@ -1,4 +1,6 @@
 import { projectData } from './data.js';
+import "../globals.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Projects = () => {
   return (
@@ -13,7 +15,7 @@ const Projects = () => {
                 <a href={project.gitHubLink}><i className="fa-brands fa-github"></i></a>
               </div>
             </div>
-            <h3>{project.title}</h3>
+            <h3 className="project-title">{project.title}</h3>
             <p>{project.description}</p>
           </div>
         ))
