@@ -1,5 +1,5 @@
 import Image from "next/image";
-import aboutText from './about-text'; 
+import AboutText from './about-text'; 
 
 const About = () => {
   return (
@@ -7,7 +7,7 @@ const About = () => {
       <h2>About Me</h2>
       <div className="flex-about">
         <div className="about-text">
-        <p>{aboutText}</p>
+            <AboutText />
         </div>
         <div className="about-img">
           <Image src='/images/about-me.jpeg' className="profile-img" width={300} height={500}/>
